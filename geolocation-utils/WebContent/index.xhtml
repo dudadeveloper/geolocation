@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title></title>
+</h:head>
+<h:body>
+	<h:form>
+		<h:panelGrid columns="2">
+			<h:outputText value="Local Origem:" />
+			<h:inputText value="#{restBean.enderecoOrigem}" />
+			<h:outputText value="Local Destino:" />
+			<h:inputText value="#{restBean.enderecoDestino}" />
+			<h:commandButton value="Buscar no Google" action="#{restBean.buscar}" />
+		</h:panelGrid>
+		<br/><br/>
+		
+		<h:outputText value="Origem" style="font-size:18px;" />
+		<br/><br/>
+		
+		<ui:repeat var="result" value="#{restBean.origem.results}">
+			<h:outputText value="#{result.formatted_address}" />
+			<h:panelGrid columns="2">
+				<h:outputText value="Latitude:" />
+				<h:outputText value="#{result.geometry.location.lat}" />
+				<h:outputText value="Longitude:" />
+				<h:outputText value="#{result.geometry.location.lng}" />
+			</h:panelGrid>
+		</ui:repeat>
+		<br/><br/>
+		
+		<h:outputText value="Desntino" style="font-size:18px;" />
+		<br/><br/>
+		
+		<ui:repeat var="result" value="#{restBean.destino.results}">
+			<h:outputText value="#{result.formatted_address}" />
+			<h:panelGrid columns="2">
+				<h:outputText value="Latitude:" />
+				<h:outputText value="#{result.geometry.location.lat}" />
+				<h:outputText value="Longitude:" />
+				<h:outputText value="#{result.geometry.location.lng}" />
+			</h:panelGrid>
+		</ui:repeat>
+		<br/><br/>
+		
+		
+	</h:form>
+	
+	<h:form>
+		<h:commandButton value="Caluclar Distância" action="#{restBean.calulateDistancia}" />
+		<h:outputText value="#{restBean.distancia} km" style="font-size:18px;" rendered="#{not empty restBean.distancia}" />
+		<br/> <br/>
+	</h:form>
+	
+	<h:form>
+		<h:commandButton action="#{restBean.geoIp}" value="Minha localização" />
+	</h:form>
+</h:body>
+</html>
